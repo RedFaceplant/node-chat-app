@@ -10,6 +10,7 @@ const $messages = document.querySelector("#messages")
 //Templates
 const msgTemplate = document.querySelector("#msgTemplate").innerHTML
 const urlTemplate = document.querySelector("#urlTemplate").innerHTML
+const boldTemplate = document.querySelector("#boldTemplate").innerHTML
 const sidebarTemplate = document.querySelector("#sidebarTemplate").innerHTML
 
 //Options
@@ -41,14 +42,28 @@ const autoscroll = () => {
 }
 
 socket.on("message", (message) => {
-    //console.log(message)
-    const html = Mustache.render(msgTemplate, {
-        username: message.username,
-        message: message.text,
-        createdAt: moment(message.createdAt).format("h:mm A")
-    })
-    $messages.insertAdjacentHTML("beforeend", html)
-    autoscroll()
+    var msg = message.text
+    if(msg.indexOf("&") === 0){
+        if(msg.charAt(1) === 'b'){
+            msg = msg.slice(2)
+            const html = Mustache.render(boldTemplate, {
+                username: message.username,
+                message: msg,
+                createdAt: moment(message.createdAt).format("h:mm A")
+            })
+            $messages.insertAdjacentHTML("beforeend", html)
+            autoscroll()
+        }
+    }else{
+        //Render normal message
+        const html = Mustache.render(msgTemplate, {
+            username: message.username,
+            message: msg,
+            createdAt: moment(message.createdAt).format("h:mm A")
+        })
+        $messages.insertAdjacentHTML("beforeend", html)
+        autoscroll()
+    }
 })
 
 socket.on("URL", (message) => {

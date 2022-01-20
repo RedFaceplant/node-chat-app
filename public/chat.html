@@ -18,7 +18,6 @@
                         <input name="message" placeholder="Say something" required autocomplete="off">
                         <button>Send!</button>
                     </form>
-                    <button id="sendURL">Send as Link</button>
                 </div>
             </div>
         </div>
@@ -30,27 +29,7 @@
                     <span class="message__name">{{username}}</span>
                     <span class="message__meta">{{createdAt}}</span>
                 </p>
-                <p>{{message}}</p>
-            </div>
-        </script>
-
-        <script id="boldTemplate" type="text/html">
-            <div class="message">
-                <p>
-                    <span class="message__name">{{username}}</span>
-                    <span class="message__meta">{{createdAt}}</span>
-                </p>
-                <p><b>{{message}}</b></p>
-            </div>
-        </script>
-        
-        <script id="urlTemplate" type="text/html">
-            <div class="message">
-                <p>
-                    <span class="message__name">{{username}}</span>
-                    <span class="message__meta">{{createdAt}}</span>
-                </p>
-                <p><a href="{{url}}" target="_blank">{{url}}</a></p>
+                <p>{{{message}}}</p>
             </div>
         </script>
 

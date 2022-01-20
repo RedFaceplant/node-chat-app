@@ -2,7 +2,7 @@ const path = require("path")
 const http = require("http")
 const express = require("express")
 const socketio = require("socket.io")
-const {generateMessage, generateURL} = require("./utils/messages")
+const {generateMessage} = require("./utils/messages")
 const {addUser, removeUser, getUser, getUsersInRoom} = require("./utils/users")
 
 const app = express()
@@ -45,13 +45,6 @@ io.on("connection", (socket) => {
         callback()
     })
 
-    socket.on("sendURL", (url, callback) => {
-        const user = getUser(socket.id)
-
-        io.to(user.room).emit("URL", generateURL(user.username, url))
-        callback()
-    })
-
     socket.on("disconnect", () => {
         const user = removeUser(socket.id)
 
@@ -68,9 +61,3 @@ io.on("connection", (socket) => {
 server.listen(port, () => {
     console.log(`Sever is up on port ${port}!`)
 })
-
-// socket.emit("countUpdated", count)
-// socket.on("increment", () => {
-//     count++
-//     io.emit("countUpdated", count)
-// })
